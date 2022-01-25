@@ -14,6 +14,13 @@ db.serialize(function() {
     salt BLOB \
   )");
   
+  db.run("CREATE TABLE IF NOT EXISTS federated_credentials ( \
+    user_id INTEGER NOT NULL, \
+    provider TEXT NOT NULL, \
+    subject TEXT NOT NULL, \
+    PRIMARY KEY (provider, subject) \
+  )");
+  
   db.run("CREATE TABLE IF NOT EXISTS todos ( \
     owner_id INTEGER NOT NULL, \
     title TEXT NOT NULL, \
