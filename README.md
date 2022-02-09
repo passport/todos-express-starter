@@ -11,9 +11,26 @@ this kit as a starting point.
 
   Illustrates how to sign in with a username and password.
 
+* [todos-express-password-flash](https://github.com/passport/todos-express-password-flash)
+
+  Illustrates how to sign in with a username and password and use the flash for
+  informative messages.
+
 * [todos-express-google](https://github.com/passport/todos-express-google)
 
   Illustrates how to sign in with Google via OpenID Connect.
+
+* [todos-express-email](https://github.com/passport/todos-express-email)
+
+  Illustrates how to sign in with email via magic link.
+
+* [todos-express-auth0](https://github.com/passport/todos-express-auth0)
+
+  Illustrates how to implement sign in by integrating with Auth0 via OpenID Connect.
+
+* [todos-express-openidconnect](https://github.com/passport/todos-express-openidconnect)
+
+  Illustrates how to implement sign in by integrating with an identity provider (IdP) via OpenID Connect.
 
 ## License
 
