@@ -20,6 +20,10 @@ this kit as a starting point.
 
   Illustrates how to sign in with Google via OpenID Connect.
 
+* [todos-express-google-oauth2](https://github.com/passport/todos-express-google-oauth2)
+
+  Illustrates how to sign in with Google via OAuth 2.0.
+
 * [todos-express-email](https://github.com/passport/todos-express-email)
 
   Illustrates how to sign in with email via magic link.
