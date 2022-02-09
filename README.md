@@ -7,7 +7,7 @@ This is a starter kit for building a todo app with sign in functionality using
 The following is a list of complete, working apps that have been built using
 this kit as a starting point.
 
-* [todos-express-google](https://github.com/passport/todos-express-password)
+* [todos-express-password](https://github.com/passport/todos-express-password)
 
   Illustrates how to sign in with a username and password.
 
