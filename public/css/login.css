@@ -88,6 +88,10 @@ hr {
 	border-bottom: none;
 }
 
+p.instructions {
+	font-weight: 400;
+}
+
 p.help {
 	text-align: center;
 	font-weight: 400;
