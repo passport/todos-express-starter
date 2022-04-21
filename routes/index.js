@@ -2,7 +2,7 @@ var express = require('express');
 var db = require('../db');
 
 function fetchTodos(req, res, next) {
-  db.all('SELECT rowid AS id, * FROM todos WHERE owner_id = ?', [
+  db.all('SELECT * FROM todos WHERE owner_id = ?', [
     req.user.id
   ], function(err, rows) {
     if (err) { return next(err); }
@@ -67,7 +67,7 @@ router.post('/:id(\\d+)', function(req, res, next) {
   next();
 }, function(req, res, next) {
   if (req.body.title !== '') { return next(); }
-  db.run('DELETE FROM todos WHERE rowid = ? AND owner_id = ?', [
+  db.run('DELETE FROM todos WHERE id = ? AND owner_id = ?', [
     req.params.id,
     req.user.id
   ], function(err) {
@@ -75,7 +75,7 @@ router.post('/:id(\\d+)', function(req, res, next) {
     return res.redirect('/' + (req.body.filter || ''));
   });
 }, function(req, res, next) {
-  db.run('UPDATE todos SET title = ?, completed = ? WHERE rowid = ? AND owner_id = ?', [
+  db.run('UPDATE todos SET title = ?, completed = ? WHERE id = ? AND owner_id = ?', [
     req.body.title,
     req.body.completed !== undefined ? 1 : null,
     req.params.id,
@@ -87,7 +87,7 @@ router.post('/:id(\\d+)', function(req, res, next) {
 });
 
 router.post('/:id(\\d+)/delete', function(req, res, next) {
-  db.run('DELETE FROM todos WHERE rowid = ? AND owner_id = ?', [
+  db.run('DELETE FROM todos WHERE id = ? AND owner_id = ?', [
     req.params.id,
     req.user.id
   ], function(err) {
