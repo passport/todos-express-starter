@@ -37,6 +37,10 @@ a.google {
 	background: #4787ed;
 }
 
+a.facebook {
+	background: #4267b2;
+}
+
 button:hover {
 	background-color: #c83f45;
 }
