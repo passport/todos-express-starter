@@ -2,9 +2,9 @@ var sqlite3 = require('sqlite3');
 var mkdirp = require('mkdirp');
 var crypto = require('crypto');
 
-mkdirp.sync('./var/db');
+mkdirp.sync('var/db');
 
-var db = new sqlite3.Database('./var/db/todos.db');
+var db = new sqlite3.Database('var/db/todos.db');
 
 db.serialize(function() {
   // create the database schema for the todos app
