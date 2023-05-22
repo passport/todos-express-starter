@@ -41,6 +41,10 @@ a.facebook {
 	background: #4267b2;
 }
 
+a.twitter {
+	background: #1da1f2;
+}
+
 button:hover {
 	background-color: #c83f45;
 }
