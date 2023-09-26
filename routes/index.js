@@ -2,6 +2,7 @@ var express = require('express');
 var db = require('../db');
 
 function fetchTodos(req, res, next) {
+  if (!req.user) { return res.redirect('/'); }
   db.all('SELECT * FROM todos WHERE owner_id = ?', [
     req.user.id
   ], function(err, rows) {
@@ -32,6 +33,12 @@ router.get('/', function(req, res, next) {
   res.locals.filter = null;
   res.render('index', { user: req.user });
 });
+
+router.get('/protected', (req, res) => {
+  if (!req.user) { return res.render('home'); }
+  
+  return res.send('hello')
+})
 
 router.get('/active', fetchTodos, function(req, res, next) {
   res.locals.todos = res.locals.todos.filter(function(todo) { return !todo.completed; });
