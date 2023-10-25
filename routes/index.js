@@ -55,7 +55,7 @@ router.post('/', function(req, res, next) {
   db.run('INSERT INTO todos (owner_id, title, completed) VALUES (?, ?, ?)', [
     req.user.id,
     req.body.title,
-    req.body.completed == true ? 1 : null
+    req.body.filter == "completed" ? 1 : null
   ], function(err) {
     if (err) { return next(err); }
     return res.redirect('/' + (req.body.filter || ''));
