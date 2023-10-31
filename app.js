@@ -14,7 +14,7 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var app = express();
 
-const port = 5002;
+const port = 3000;
 
 app.locals.pluralize = require('pluralize');
 
