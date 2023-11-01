@@ -28,7 +28,10 @@
   },
   "license": "Unlicense",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "startdev": "nodemon app.js",
+    "lint": "eslint --fix --ext .js,.jsx .",
+    "build": "webpack"
   },
   "dependencies": {
     "connect-sqlite3": "^0.9.13",
@@ -47,6 +50,11 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "eslint": "^8.52.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "nodemon": "^3.0.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }
