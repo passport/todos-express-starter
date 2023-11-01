@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+// const favicon = require('serve-favicon');
 
 const SQLiteStore = require('connect-sqlite3')(session);
 
@@ -23,6 +24,7 @@ app.locals.pluralize = require('pluralize');
 app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
+// app.use(favicon(path.join(__dirname, 'public', 'css/favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
