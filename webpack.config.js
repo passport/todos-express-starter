@@ -4,8 +4,7 @@ module.exports = {
   mode: 'production',
   entry: './app.js',
   output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: '/',
+    path: path.resolve(__dirname, 'dist'),
     filename: 'final.js',
   },
   target: 'node',
