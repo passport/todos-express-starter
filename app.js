@@ -1,25 +1,44 @@
-require('dotenv').config();
-
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const passport = require('passport');
-const session = require('express-session');
+import 'dotenv/config';
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import passport from 'passport';
+import pluralize from 'pluralize';
+import { fileURLToPath } from 'url';
 // const favicon = require('serve-favicon');
 
-const SQLiteStore = require('connect-sqlite3')(session);
+// const SQLiteStore = require('connect-sqlite3')(session);
 
-const indexRouter = require('./src/routes/index');
-const authRouter = require('./src/routes/auth');
+import session from 'express-session';
+import connectSequelize from 'connect-session-sequelize';
 
+// const indexRouter = require('./src/routes/index');
+// const authRouter = require('./src/routes/auth');
+
+// const db = require('./db');
+import sequelize from './src/models/index.js';
+
+const SequelizeStore = connectSequelize(session.Store);
 const app = express();
 
 const port = 3000;
 
-app.locals.pluralize = require('pluralize');
+app.use(
+  session({
+    secret: 'keyboard cat',
+    store: new SequelizeStore({
+      db: sequelize,
+    }),
+    resave: false,
+    proxy: true, // if you do SSL outside of node.
+  }),
+);
+app.locals.pluralize = pluralize;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // view engine setup
 app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
@@ -31,16 +50,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false,
-  store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' }),
-}));
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: false,
+//   store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' }),
+// }));
 
 app.use(passport.authenticate('session'));
-app.use('/', indexRouter);
-app.use('/', authRouter);
+// app.use('/', indexRouter);
+// app.use('/', authRouter);
+
+app.get('/', (req, res) => {
+  res.json(['hello world']);
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -58,7 +81,13 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-app.listen(port, (err) => {
+app.listen(port, async (err) => {
   // eslint-disable-next-line no-console
+  try {
+    await sequelize.sync({ force: true })  //{force: true}
+    console.log('Connected to database');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
   console.log(`running server on from port:${port}`, err);
 });
