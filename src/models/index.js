@@ -10,13 +10,13 @@ const sequelize = new Sequelize({
   storage: path.join(__dirname, '../../var', 'db', 'todos.db'),
 });
 
-import User from './user.js';
-import Todo from './todo.js';
+import user from './user.js';
+import todo from './todo.js';
 
-User(sequelize);
-Todo(sequelize);
+export const User = user(sequelize);
+export const Todo = todo(sequelize);
 
-sequelize.models.user.hasMany(sequelize.models.todo);
-sequelize.models.todo.belongsTo(sequelize.models.user);
+User.hasMany(Todo);
+Todo.belongsTo(User);
 
 export default sequelize;

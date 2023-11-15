@@ -11,10 +11,12 @@ export default (sequelize) => {
       autoIncrement: true,
     },
     title: DataTypes.TEXT,
-    completed: DataTypes.BOOLEAN,
+    completed: DataTypes.INTEGER,
   }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
     modelName: 'todo', // We need to choose the model name
   });
+
+  return Todo;
 };

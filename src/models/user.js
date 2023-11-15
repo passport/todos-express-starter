@@ -22,15 +22,17 @@ export default (sequelize) => {
     },
     hashedPassword: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     salt: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
   }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
     modelName: 'user', // We need to choose the model name
   });
+
+  return User;
 };

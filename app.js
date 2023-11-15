@@ -14,11 +14,11 @@ import { fileURLToPath } from 'url';
 import session from 'express-session';
 import connectSequelize from 'connect-session-sequelize';
 
-// const indexRouter = require('./src/routes/index');
-// const authRouter = require('./src/routes/auth');
+import indexRouter from './src/routes/index.js';
+import authRouter from './src/routes/auth.js';
 
 // const db = require('./db');
-import sequelize from './src/models/index.js';
+import sequelize, {User} from './src/models/index.js';
 
 const SequelizeStore = connectSequelize(session.Store);
 const app = express();
@@ -58,12 +58,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 // }));
 
 app.use(passport.authenticate('session'));
-// app.use('/', indexRouter);
-// app.use('/', authRouter);
+app.use('/', indexRouter);
+app.use('/', authRouter);
 
-app.get('/', (req, res) => {
-  res.json(['hello world']);
-});
+// test for login
+// app.get('/', async (req, res) => {
+//   // const jane = await User.create({ email: "Jane2" });
+//   const user = await User.findOne({ where: { email: 'test1' } });
+
+//   res.json({user});
+//   // res.json('hello world');
+// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -84,7 +89,7 @@ app.use((err, req, res) => {
 app.listen(port, async (err) => {
   // eslint-disable-next-line no-console
   try {
-    await sequelize.sync({ force: true })  //{force: true}
+    await sequelize.sync()  //{force: true}
     console.log('Connected to database');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
