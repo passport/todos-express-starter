@@ -1,11 +1,8 @@
-/* eslint-disable no-shadow */
-/* eslint-disable consistent-return */
 import express from 'express';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import crypto from 'crypto';
 import { User } from '../models/index.js';
-// import db from '../../db';
 
 passport.use(new LocalStrategy(async (email, password, cb) => {
   try {
@@ -23,19 +20,6 @@ passport.use(new LocalStrategy(async (email, password, cb) => {
   } catch(e) {
     cb(e);
   }
-  
-  // db.get('SELECT * FROM users WHERE username = ?', [username], (err, row) => {
-  //   if (err) { return cb(err); }
-  //   if (!row) { return cb(null, false, { message: 'Incorrect username or password.' }); }
-
-  //   crypto.pbkdf2(password, row.salt, 310000, 32, 'sha256', (err, hashedPassword) => {
-  //     if (err) { return cb(err); }
-  //     if (!crypto.timingSafeEqual(row.hashed_password, hashedPassword)) {
-  //       return cb(null, false, { message: 'Incorrect username or password.' });
-  //     }
-  //     return cb(null, row);
-  //   });
-  // });
 }));
 
 passport.serializeUser((user, cb) => {
@@ -85,22 +69,6 @@ router.post('/signup', (req, res, next) => {
       if (err) { return next(err); }
       res.redirect('/');
     });
-
-    // db.run('INSERT INTO users (username, hashed_password, salt) VALUES (?, ?, ?)', [
-    //   req.body.username,
-    //   hashedPassword,
-    //   salt,
-    // ], (err) => {
-    //   if (err) { return next(err); }
-    //   const user = {
-    //     id: this.lastID,
-    //     username: req.body.username,
-    //   };
-    //   req.login(user, (err) => {
-    //     if (err) { return next(err); }
-    //     res.redirect('/');
-    //   });
-    // });
   });
 });
 export default router;

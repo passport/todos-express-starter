@@ -7,9 +7,6 @@ import logger from 'morgan';
 import passport from 'passport';
 import pluralize from 'pluralize';
 import { fileURLToPath } from 'url';
-// const favicon = require('serve-favicon');
-
-// const SQLiteStore = require('connect-sqlite3')(session);
 
 import session from 'express-session';
 import connectSequelize from 'connect-session-sequelize';
@@ -17,7 +14,6 @@ import connectSequelize from 'connect-session-sequelize';
 import indexRouter from './src/routes/index.js';
 import authRouter from './src/routes/auth.js';
 
-// const db = require('./db');
 import sequelize, {User} from './src/models/index.js';
 
 const SequelizeStore = connectSequelize(session.Store);
@@ -43,32 +39,15 @@ const __dirname = path.dirname(__filename);
 app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
-// app.use(favicon(path.join(__dirname, 'public', 'css/favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: false,
-//   store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' }),
-// }));
-
 app.use(passport.authenticate('session'));
 app.use('/', indexRouter);
 app.use('/', authRouter);
-
-// test for login
-// app.get('/', async (req, res) => {
-//   // const jane = await User.create({ email: "Jane2" });
-//   const user = await User.findOne({ where: { email: 'test1' } });
-
-//   res.json({user});
-//   // res.json('hello world');
-// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

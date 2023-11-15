@@ -11,7 +11,7 @@ export default (sequelize) => {
       autoIncrement: true,
     },
     title: DataTypes.TEXT,
-    completed: DataTypes.INTEGER,
+    completed: DataTypes.BOOLEAN,
   }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
