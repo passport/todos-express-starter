@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "description": "Starter todo app using Express, Passport, and SQLite for sign in.",
+  "main": "app.js",
+  "type": "module", 
   "keywords": [
     "example",
     "express",
@@ -34,6 +36,7 @@
     "build": "webpack"
   },
   "dependencies": {
+    "connect-session-sequelize": "^7.1.7",
     "connect-sqlite3": "^0.9.13",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -47,8 +50,9 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pluralize": "^8.0.0",
+    "sequelize": "^6.34.0",
     "serve-favicon": "^2.5.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "eslint": "^8.52.0",

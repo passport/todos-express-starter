@@ -1,20 +1,19 @@
 # Use an official Node.js runtime as a base image
 FROM node:20.5.0
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Create app directory
+WORKDIR /usr/src/app
 
 # Install app dependencies
-RUN npm install
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
 
-# Copy the rest of your application code to the container
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
 COPY . .
 
-# Expose a port that your app will listen on
 EXPOSE 3000
-
-# Define the command to run your app
-CMD ["node", "app.js"]
+CMD [ "npm", "start" ]
