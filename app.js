@@ -14,7 +14,9 @@ import connectSequelize from 'connect-session-sequelize';
 import indexRouter from './src/routes/index.js';
 import authRouter from './src/routes/auth.js';
 
-import sequelize, {User} from './src/models/index.js';
+import apiTodoRouter from './src/routes/api/todos.js';
+import apiAuthRouter from './src/routes/api/authentication.js';
+import sequelize from './src/models/index.js';
 
 const SequelizeStore = connectSequelize(session.Store);
 const app = express();
@@ -23,11 +25,11 @@ const port = 3000;
 
 app.use(
   session({
-    secret: 'keyboard cat',
+    secret: process.env.SECRET_KEY,
     store: new SequelizeStore({
       db: sequelize,
     }),
-    resave: false,
+    resave: true,
     proxy: true, // if you do SSL outside of node.
   }),
 );
@@ -46,8 +48,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.authenticate('session'));
+
 app.use('/', indexRouter);
 app.use('/', authRouter);
+app.use('/api', apiTodoRouter);
+app.use('/api', apiAuthRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

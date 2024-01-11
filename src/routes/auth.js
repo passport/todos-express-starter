@@ -4,9 +4,10 @@ import LocalStrategy from 'passport-local';
 import crypto from 'crypto';
 import { User } from '../models/index.js';
 
-passport.use(new LocalStrategy(async (email, password, cb) => {
+passport.use(new LocalStrategy({ usernameField: 'email' }, async function verify(email, password, cb) {
   try {
     const user = await User.findOne({ where: { email } });
+    console.log('email', user.id);
     if (user === null) {
       return cb(null, false, { message: 'Incorrect username or password.' });
     }
@@ -16,8 +17,8 @@ passport.use(new LocalStrategy(async (email, password, cb) => {
         return cb(null, false, { message: 'Incorrect email or password.' });
       }
       return cb(null, user);
-    });  
-  } catch(e) {
+    });
+  } catch (e) {
     cb(e);
   }
 }));
@@ -38,7 +39,10 @@ router.get('/login', (_, res) => {
   res.render('login');
 });
 
-router.post('/login/password', passport.authenticate('local', {
+router.post('/login/password', (req, res, next) => {
+  console.log(req.body); 
+  next();
+}, passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
 }));
@@ -56,7 +60,7 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', (req, res, next) => {
   const salt = crypto.randomBytes(16);
-  console.log(salt);
+
   crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', async (err, hashedPassword) => {
     if (err) { return next(err); }
     const user = await User.create({
